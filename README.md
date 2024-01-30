@@ -1,12 +1,12 @@
 ## Title
 Weather to Wear
 
+## Team Members 
+Jamin Bucur <br>
+Luke Leong <br>
+Arturo De La Fuente-Gonzalez <br>
  
-Jamin Bucur
-Luke Leong
-Arturo De La Fuente-Gonzalez
- 
-
+## Nickname
 Project W
 
 
