@@ -19,7 +19,7 @@ Project W
 > What is the motivation for the app?
 
 > What are the goals of the app?
-
+The goals of this app is to recommend suitable clothing to match the weather.
 > What problem will the app solve?
 
 > What form will the app take to fulfill its goals?
