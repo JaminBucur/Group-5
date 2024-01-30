@@ -14,6 +14,8 @@ Project W
 > A brief description of what your app will be like and why it's
 > interesting.
 
+An application telling users what to wear based off their location and closet. 
+
 > Possible questions to answer here:
 
 > What is the motivation for the app?
