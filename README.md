@@ -34,6 +34,7 @@ This app will solve the problem of choice. The user will no longer have to choos
 It will be in a console.
 
 > What sorts of features will the app have?<br>
+
 Login/Signout
 Add/Delete Clothing
 Add temperature score
