@@ -52,3 +52,6 @@ Eliminate choice from your day. Have the (Closet picker) select the best most su
 > What makes this app interesting/cool?
 
 The app automatically chooses the best clothing to wear based on the weather. Also, it allows for advertisements that help the user fill their closet with clothes.
+
+<img width="494" alt="image" src="https://github.com/JaminBucur/Group-5/assets/142348463/76502cf2-3d84-4716-b015-e225c5e6c700">
+
