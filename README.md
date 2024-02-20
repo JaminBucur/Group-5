@@ -15,6 +15,7 @@ Weather to Wear is an application that would tell users what to wear based off t
 Eliminate the choice from your day. Have the Auto-Fit select the best most suitable apparel for the day. The app will automatically choose the best clothing to wear based on the weather. Also, it allows for advertisements that help the user fill their closet with clothes. And no need to worry about inapropiate ads or comments since there is an Administrator that approves the ads and filter the comments.
 
 
-<img width="473" alt="image" src="https://github.com/JaminBucur/Group-5/assets/142348463/697a8da9-f876-4d23-8536-c86f0567704b">
+<img width="485" alt="Use-Case" src="https://github.com/JaminBucur/Group-5/assets/142348463/fcfffa0b-14f8-44df-ab92-58d4d354ad07">
+
 
 
