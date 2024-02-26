@@ -41,17 +41,14 @@ function displayClosets() {
         deleteButton.className = 'btn btn-danger';
         deleteButton.textContent = 'Delete Closet';
         deleteButton.addEventListener('click', function() {
-            var confirmDelete = confirm("Are you sure you want to delete this closet?");
-            if (confirmDelete) {
-                // Delete the closet from local storage
-                var updatedClosets = closets.filter(function(closet) {
-                    return closet !== closetName;
-                });
-                localStorage.setItem('closets', JSON.stringify(updatedClosets));
-        
-                // Update closet list
-                displayClosets();
-            }
+            // Delete the closet from local storage
+            var updatedClosets = closets.filter(function(closet) {
+                return closet !== closetName;
+            });
+            localStorage.setItem('closets', JSON.stringify(updatedClosets));
+
+            // Update closet list
+            displayClosets();
         });
 
         // Create button to add clothing
@@ -101,7 +98,6 @@ document.getElementById('confirm-add-clothing-btn').addEventListener('click', fu
     var clothingName = document.getElementById('clothing-name').value;
     var clothingType = document.getElementById('clothing-type').value;
     var heatIndex = document.getElementById('heat-index').value;
-    currentDate = new Date().toJSON().slice(0, 10);
 
     // Create container for clothing item
     var clothingContainer = document.createElement('div');
@@ -118,8 +114,7 @@ document.getElementById('confirm-add-clothing-btn').addEventListener('click', fu
     clothingDetails.innerHTML = `
         <strong>Name:</strong> ${clothingName}<br>
         <strong>Type:</strong> ${clothingType}<br>
-        <strong>Heat Index:</strong> ${heatIndex} <br>
-        <strong>Date Added:</strong> ${currentDate}
+        <strong>Heat Index:</strong> ${heatIndex}
     `;
 
     // Create delete button for clothing item
@@ -127,10 +122,7 @@ document.getElementById('confirm-add-clothing-btn').addEventListener('click', fu
     deleteClothingButton.className = 'btn btn-danger';
     deleteClothingButton.innerHTML = '<i class="bi bi-x"></i>'; // Use Bootstrap Icon for "x"
     deleteClothingButton.addEventListener('click', function() {
-        var confirmDelete = confirm("Are you sure you want to delete this clothing?");
-        if (confirmDelete) {
         clothingContainer.remove(); // Remove the clothing box when the delete button is clicked
-        }
     });
 
     // Append clothing details and delete button to card body
