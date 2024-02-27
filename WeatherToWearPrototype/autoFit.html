@@ -70,13 +70,18 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <button class="btn btn-primary" id="generate-fit-btn">Generate Fit</button>
+                <button class="btn btn-primary" button onclick="returnAutofit()" id="generate-fit-btn">Generate Fit</button>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="autoFit.js"></script>
+    <script>
+        function returnAutofit() {
+          alert("The weather in Greensboro is 54F, it is reccomended to wear your Blue Columbia jacket, black long-sleeved shirt, and khaki pants. It will rain today. Remember an umbrella!");
+        }
+        </script>
 </body>
 
 </html>
