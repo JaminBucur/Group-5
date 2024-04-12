@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoFit - Weather To Wear</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -19,22 +17,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="home">Home</a>
+                        <a class="nav-link" href="home.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="closet">Closet</a>
+                        <a class="nav-link" href="closet.html">Closet</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="advertiser">Advertiser</a>
+                        <a class="nav-link" href="advertiser.html">Advertiser</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="admin">Admin Panel</a>
+                        <a class="nav-link" href="admin.html">Admin Panel</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="autoFit">AutoFit</a>
+                        <a class="nav-link" href="autoFit.html">AutoFit</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="forSale">Buy Clothing</a>
+                        <a class="nav-link" href="forSale.html">Buy Clothing</a>
                     </li>
                 </ul>
             </div>
@@ -70,7 +68,12 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <button class="btn btn-primary" button onclick="returnAutofit()" id="generate-fit-btn">Generate Fit</button>
+                <button class="btn btn-primary" onclick="returnAutofit()" id="generate-fit-btn">Generate Fit</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div id="outfit-recommendation"></div>
             </div>
         </div>
     </div>
@@ -79,9 +82,17 @@
     <script src="autoFit.js"></script>
     <script>
         function returnAutofit() {
-          alert("The weather in Greensboro is 54F, it is reccomended to wear your Blue Columbia jacket, black long-sleeved shirt, and khaki pants. It will rain today. Remember an umbrella!");
+            // Fetch selected closet
+            var selectedCloset = document.getElementById("closet-select").value;
+            // Fetch city and zipcode
+            var city = document.getElementById("city").value;
+            var zipcode = document.getElementById("zipcode").value;
+            // You can make an API call here to fetch weather information based on city and zipcode
+            // For now, let's assume some sample outfit recommendation
+            var outfitRecommendation = "The weather in " + city + " is 54F, it is recommended to wear your Blue Columbia jacket, black long-sleeved shirt, and khaki pants. It will rain today. Remember an umbrella!";
+            // Display outfit recommendation
+            document.getElementById("outfit-recommendation").innerHTML = outfitRecommendation;
         }
-        </script>
+    </script>
 </body>
-
 </html>

@@ -1,32 +1,8 @@
+// controllers/login.controller.js
+
 "use strict";
 
-const express = require("express");
-const app = express();
-
-const multer = require("multer");
-app.use(multer().none());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 const model = require("../models/login.model");
-
-function createUser(req, res, next) {
-    try {
-        res.json(model.createUser(req.body.Username, req.body.Password, req.body.Status));
-    } catch (err) {
-        console.error("Error while creating user ", err.message);
-        next(err);
-    }
-}
-
-function loginPage(req, res) {
-    try {
-        res.sendfile('views/index.html');
-    } catch (err) {
-        console.error("Error while rendering login page ", err.message);
-        next(err);
-    }
-}
 
 function login(req, res, next) {
     try {
@@ -44,7 +20,6 @@ function login(req, res, next) {
 }
 
 module.exports = {
-    createUser,
-    loginPage,
-    login,
+    login
 };
+
