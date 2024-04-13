@@ -72,7 +72,7 @@ function banUser(req, res) {
     try {
         const Username = req.body.Username;
         const BanReason = req.body.BanReason;
-        console.log(Username, BanReason);
+        // console.log(Username, BanReason);
         model.deleteUserAds(Username);
         model.deleteUserComments(Username);
         model.banUser(BanReason, Username);
