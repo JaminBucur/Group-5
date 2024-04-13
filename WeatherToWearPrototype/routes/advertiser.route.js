@@ -1,9 +1,15 @@
 "use strict";
 const express = require("express");
-const router = express.Router();
+
 
 const advertiserController = require("../controllers/advertiser.controller");
 
-router.get("/advertiser", advertiserController.advertiserPage);
+module.exports = function (imageUpload) {
+    const router = express.Router();
 
-module.exports = router;
+    router.get("/advertiser", advertiserController.advertiserPage);
+    
+    router.post("/createAd", imageUpload.single("Image"), advertiserController.createAd);
+
+    return router;
+}

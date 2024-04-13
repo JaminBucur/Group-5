@@ -8,6 +8,7 @@ const loginController = require("../controllers/login.controller");
 
 router.get("/home", loginController.loginPage);
 router.get("/logout", loginController.logout);
+router.get("/banned", loginController.bannedPage);
 
 router.post("/login", loginController.login);
 

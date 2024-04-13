@@ -16,7 +16,7 @@ function closetPage(req, res) {
         const closets = model.getClosets(req.session.Username);
         // console.log(closets);
         const clothing = []
-        res.render("closet", {Status: req.session.Status, closets, clothing});
+        res.render("closet", {session: req.session, closets, clothing});
     } catch (err) {
         console.error("Error while rendering closet page ", err.message);
         // next(err);
@@ -26,7 +26,7 @@ function closetPage(req, res) {
 function autoFitPage(req, res) {
     try {
         // res.sendfile('views/autoFit.html');
-        res.render("autoFit", {Status: req.session.Status});
+        res.render("autoFit", {session: req.session});
     } catch (err) {
         console.error("Error while rendering autoFit page ", err.message);
         // next(err);
@@ -36,7 +36,7 @@ function autoFitPage(req, res) {
 function forSalePage(req, res) {
     try {
         // res.sendfile('views/forSale.html');
-        res.render("forSale", {Status: req.session.Status});
+        res.render("forSale", {session: req.session});
     } catch (err) {
         console.error("Error while rendering forSale page ", err.message);
         // next(err);
@@ -46,7 +46,7 @@ function forSalePage(req, res) {
 function itemDisplayPage(req, res) {
     try {
         // res.sendfile('views/itemDisplay.html');
-        res.render("itemDisplay", {Status: req.session.Status});
+        res.render("itemDisplay", {session: req.session});
     } catch (err) {
         console.error("Error while rendering itemDisplay page ", err.message);
         // next(err);
@@ -89,7 +89,7 @@ function clothingInCloset(req, res) {
         const clothing = model.getClothing(closetID);
         // console.log(clothing);
         const closets = model.getClosets(req.session.Username);
-        res.render("closet", {Status: req.session.Status, closets, clothing});
+        res.render("closet", {session: req.session, closets, clothing});
 
     } catch (err) {
         console.error("Error while getting clothing in closet ", err.message);

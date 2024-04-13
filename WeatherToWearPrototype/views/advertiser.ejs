@@ -15,16 +15,17 @@
 
     <div class="container">
         <h2>Advertiser</h2>
-        <form id="ad-form">
+        <form id="ad-form" action="/createAd" method="post" enctype="multipart/form-data">
             <h3>Create Ad</h3>
             <div class="mb-3">
                 <label for="ad-image" class="form-label">Image</label>
-                <input type="file" class="form-control" id="ad-image" required accept="image/*">
+                <input type="file" class="form-control" name="Image" required accept="image/*">
             </div>
             <div class="mb-3">
                 <label for="ad-description" class="form-label">Description</label>
-                <textarea class="form-control" id="ad-description" rows="3" required></textarea>
+                <textarea class="form-control" name="Description" rows="3" required></textarea>
             </div>
+            <input type="hidden" id="Username" value="<%= session.Username %>">
             <button type="submit" class="btn btn-primary">Submit Ad</button>
         </form>
 

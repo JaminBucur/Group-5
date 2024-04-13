@@ -7,33 +7,41 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <% if (!Status) { %>
+                <% if (!session.Status) { %>
                 <li class="nav-item">
                     <a class="nav-link" href="/home">Home</a>
                 </li>
                 <% } %>
-                <% if (Status === 'user') { %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/closet">Closet</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/autoFit">AutoFit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/forSale">Buy Clothing</a>
-                </li>
+                <% if (session.Banned === 1) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/banned">Banned</a>
+                    </li>
+                <% } else if (session.Status === 'user') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/closet">Closet</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/autoFit">Auto Fit</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/forSale">Buy Clothing</a>
+                    </li>
+                <% } else if (session.Status === 'advertiser') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/advertiser">Advertiser</a>
+                    </li>
+                <% } else if (session.Status === 'admin') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Flagged Comments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bannedUsers">Banned Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/manageAds">Manage Ads</a>
+                    </li>
                 <% } %>
-                <% if (Status === 'advertiser') { %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/advertiser">Advertiser</a>
-                </li>
-                <% } %>
-                <% if (Status === 'admin') { %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin">Admin Panel</a>
-                </li>
-                <% } %>
-                <% if (Status) { %>
+                <% if (session.Status) { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Logout</a>
                     </li>
