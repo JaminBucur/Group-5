@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Display - Weather To Wear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+    
+    <div class="container">
+        <h2>Item Details</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="item-images" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Add item images here -->
+                        <div class="carousel-item active">
+                            <img src="https://via.placeholder.com/400" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#item-images"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#item-images"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>Item Name</h3>
+                <p>Description: This is a description of an item that is for sale.</p>
+                <button class="btn btn-primary">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Comments</h2>
+        <form id="commentForm">
+            <div class="mb-3">
+                <label for="userName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="userName" placeholder="Your name">
+            </div>
+            <div class="mb-3">
+                <label for="userComment" class="form-label">Comment</label>
+                <textarea class="form-control" id="userComment" rows="3" placeholder="Your comment"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+        <div id="commentsSection"></div>
+    </div>
+    <script>
+        document.getElementById('commentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var userName = document.getElementById('userName').value;
+            var userComment = document.getElementById('userComment').value;
+
+            var commentCard = document.createElement('div');
+            commentCard.className = 'card mt-3';
+
+            var cardBody = document.createElement('div');
+            cardBody.className = 'card-body';
+
+            var commentText = document.createElement('p');
+            commentText.className = 'card-text';
+            commentText.textContent = userComment;
+
+            var commentTitle = document.createElement('h6');
+            commentTitle.className = 'card-subtitle text-muted text-end';
+            commentTitle.textContent = '-' + userName;
+
+            cardBody.appendChild(commentText);
+            cardBody.appendChild(commentTitle);
+            commentCard.appendChild(cardBody);
+
+            document.getElementById('commentsSection').appendChild(commentCard);
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

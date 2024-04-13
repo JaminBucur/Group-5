@@ -12,7 +12,8 @@ const model = require("../models/admin.model");
 
 function adminPage(req, res) {
     try {
-        res.sendfile('views/admin.html');
+        // res.sendfile('views/admin.html');
+        res.render("admin", {Status: req.session.Status});
     } catch (err) {
         console.error("Error while rendering admin page ", err.message);
         next(err);

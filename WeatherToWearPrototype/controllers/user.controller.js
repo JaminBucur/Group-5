@@ -11,70 +11,131 @@ app.use(express.json());
 const model = require("../models/user.model");
 
 
-
-// function createCloset(closetName, userID) {
-//     fetch('/addCloset', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ closetName: closetName, userID: userID })
-//     })
-// }
-
-
-
-function createCloset(req, res, next) {
-    try {
-        res.json(model.createCloset(req.body.Username, req.body.ClosetName));
-    } catch (err) {
-        console.error("Error while creating closet ", err.message);
-        next(err);
-    }
-}
-
 function closetPage(req, res) {
     try {
-        res.sendfile('views/closet.html');
+        const closets = model.getClosets(req.session.Username);
+        // console.log(closets);
+        const clothing = []
+        res.render("closet", {Status: req.session.Status, closets, clothing});
     } catch (err) {
         console.error("Error while rendering closet page ", err.message);
-        next(err);
+        // next(err);
     }
 }
 
 function autoFitPage(req, res) {
     try {
-        res.sendfile('views/autoFit.html');
+        // res.sendfile('views/autoFit.html');
+        res.render("autoFit", {Status: req.session.Status});
     } catch (err) {
         console.error("Error while rendering autoFit page ", err.message);
-        next(err);
+        // next(err);
     }
 }
 
 function forSalePage(req, res) {
     try {
-        res.sendfile('views/forSale.html');
+        // res.sendfile('views/forSale.html');
+        res.render("forSale", {Status: req.session.Status});
     } catch (err) {
         console.error("Error while rendering forSale page ", err.message);
-        next(err);
+        // next(err);
     }
 }
 
 function itemDisplayPage(req, res) {
     try {
-        res.sendfile('views/itemDisplay.html');
+        // res.sendfile('views/itemDisplay.html');
+        res.render("itemDisplay", {Status: req.session.Status});
     } catch (err) {
         console.error("Error while rendering itemDisplay page ", err.message);
-        next(err);
+        // next(err);
     }
 }
 
+function createCloset(req, res) {
+    try {
+        const Username = req.session.Username;
+        const ClosetName = req.body.ClosetName
+        model.createCloset(Username, ClosetName);
+        // const closets = model.getClosets();
+        res.redirect('/closet');
+    } catch (err) {
+        console.error("Error while creating closet ", err.message);
+    }
+}
+
+function addClothing(req, res) {
+    try {
+        // console.log(req.body);
+        const clothingID = req.body.ClothingID;
+        const closetID = req.body.ClosetID;
+        const clothingName = req.body.ClothingName;
+        const clothingType = req.body.ClothingType;
+        const heatIndex = req.body.HeatIndex;
+        
+        model.addClothing(clothingID, closetID, clothingName, clothingType, heatIndex);
+        res.redirect('/closet');
+    } catch (err) {
+        console.error("Error while adding clothing ", err.message);
+    }
+}
+
+function clothingInCloset(req, res) {
+    try {
+        // console.log(req.body);
+        const closetID = req.body.ClosetID;
+        // console.log(closetID);
+        const clothing = model.getClothing(closetID);
+        // console.log(clothing);
+        const closets = model.getClosets(req.session.Username);
+        res.render("closet", {Status: req.session.Status, closets, clothing});
+
+    } catch (err) {
+        console.error("Error while getting clothing in closet ", err.message);
+    }
+}
+
+function deleteClothing(req, res) {
+    try {
+        const clothingID = req.body.ClothingID;
+        model.deleteClothing(clothingID);
+        res.redirect('/closet');
+    } catch (err) {
+        console.error("Error while removing clothing ", err.message);
+    }
+}
+
+function deleteCloset(req, res) {
+    try {
+        const closetID = req.body.ClosetID;
+        model.deleteAllClothing(closetID);
+        model.deleteCloset(closetID);
+        res.redirect('/closet');
+    } catch (err) {
+        console.error("Error while deleting closet ", err.message);
+    }
+}
+
+// function getClosets(req, res) {
+//     try {
+//         model.getClosets();
+//     } catch (err) {
+//         console.error("Error while getting closets ", err.message);
+//     }
+// }
+
 
 module.exports = {
-    createCloset,
+    
     closetPage,
     autoFitPage,
     forSalePage,
     itemDisplayPage,
-    
+    createCloset,
+    addClothing,
+    clothingInCloset,
+    deleteClothing,
+    deleteCloset
+
 };

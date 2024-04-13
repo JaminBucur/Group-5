@@ -12,7 +12,8 @@ const model = require("../models/advertiser.model");
 
 function advertiserPage(req, res) {
     try {
-        res.sendfile('views/advertiser.html');
+        // res.sendfile('views/advertiser.html');
+        res.render("advertiser", {Status: req.session.Status});
     } catch (err) {
         console.error("Error while rendering advertiser page ", err.message);
         next(err);

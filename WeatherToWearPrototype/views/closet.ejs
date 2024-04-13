@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Closet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+
+    <div class="container mt-5">
+        <h1>Closet</h1>
+
+        <!-- Form to create a new closet -->
+        <form id="create-closet-form" class="mb-4" action="/createCloset" method="post">
+            <div class="mb-3">
+                <label for="ClosetName" class="form-label">Closet Name</label>
+                <input type="text" class="form-control" name="ClosetName" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Closet</button>
+        </form>
+
+        <!-- List of closets -->
+        <ul id="closet-list" class="list-group">
+            <% closets.forEach(closet => { %>
+                <li class="list-group-item mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3><%= closet.ClosetName %></h3>
+
+                        <!-- Buttons container -->
+                        <div>
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addClothingModal<%= closet.ClosetID %>">Add Clothing</button>
+                            <form action="/deleteCloset" method="post">
+                                <input type="hidden" name="ClosetID" value="<%= closet.ClosetID %>">
+                                <button type="submit" class="btn btn-danger">Delete Closet</button>
+                            </form>
+                            <form action="/displayClothing" method="post">
+                                <input type="hidden" name="ClosetID" value="<%= closet.ClosetID %>">
+                                <button type="submit" class="btn btn-primary toggle-button">Show Clothing</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Clothing container -->
+                    <div class="clothing-container row mt-3" style="width: 100%;">
+                        <% clothing.forEach(cloth => { %>   
+                            <% if (closet.ClosetID === cloth.ClosetID) { %>      
+                                <div class="card mb-3" style="max-width: 18rem;">
+                                    <div class="card-body d-flex justify-content-between align-items-center">
+                                        <p class="card-text">
+                                            <strong>Name:</strong> <%= cloth.ClothingName %><br>
+                                            <strong>Type:</strong> <%= cloth.ClothingType %><br>
+                                            <strong>Heat Index:</strong> <%= cloth.HeatIndex %>
+                                        </p>
+                                        <form action="/deleteClothing" method="post">
+                                            <input type="hidden" name="ClothingID" value="<%= cloth.ClothingID %>">
+                                            <button type="submit" class="btn btn-danger"><i class="bi bi-x"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% }); %>
+                    </div>
+                    
+                    <!-- Add Clothing Modal -->
+                    <div class="modal fade" id="addClothingModal<%= closet.ClosetID %>" tabindex="-1" aria-labelledby="addClothingModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="add-clothing-form" action="/addClothing" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addClothingModalLabel">Add Clothing</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="ClosetID" value="<%= closet.ClosetID %>">
+                                        <div class="mb-3">
+                                            <label for="clothing-name" class="form-label">Clothing Name</label>
+                                            <input type="text" class="form-control" name="ClothingName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="clothing-type" class="form-label">Clothing Type</label>
+                                            <select class="form-select" name="ClothingType" required>
+                                                <option value="">Select Clothing Type</option>
+                                                <option value="Short Sleeved Shirt">Short-Sleeved Shirt</option>
+                                                <option value="Long Sleeved Shirt">Long-Sleeved Shirt</option>
+                                                <option value="Pants">Pants</option>
+                                                <option value="Shorts">Shorts</option>
+                                                <option value="Dress">Dress</option>
+                                                <option value="Jacket">Jacket</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="heat-index" class="form-label">Heat Index (1-10)</label>
+                                            <input type="number" class="form-control" name="HeatIndex" min="1" max="10" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add Clothing</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

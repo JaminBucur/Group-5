@@ -28,6 +28,62 @@ function createCloset(username, closetName) {
     return db.run(sql, params);
 }
 
+function deleteCloset(closetID) {
+    let sql = `DELETE FROM Closets WHERE ClosetID = ?`;
+    return db.run(sql, closetID);
+}
+
+// Function to retrieve closets from the database
+function getClosets(Username) {
+    const sql = `SELECT * FROM Closets WHERE Username = ?`;
+    return db.all(sql, Username);
+}
+
+function getClothing(ClosetID) {
+    const sql = `
+        SELECT * FROM Clothing WHERE ClosetID = ?
+    `;
+    return db.all(sql, ClosetID);
+}
+
+// Function to add clothing to a closet
+function addClothing(ClothingID, ClosetID, ClothingName, ClothingType, HeatIndex) {
+    const sql = 'INSERT INTO Clothing (ClothingID, ClosetID, ClothingName, ClothingType, HeatIndex) VALUES (?, ?, ?, ?, ?)';
+    const params = [ClothingID, ClosetID, ClothingName, ClothingType, HeatIndex];
+    return db.run(sql, params);
+}
+
+function deleteClothing(ClothingID) {
+    const sql = 'DELETE FROM Clothing WHERE ClothingID = ?';
+    return db.run(sql, ClothingID);
+}
+
+function clothingInCloset(ClosetID) {
+    const sql = 'SELECT * FROM Clothing WHERE ClosetID = ?';
+    return db.all(sql, ClosetID);
+}
+
+function deleteAllClothing(ClosetID) {
+    const sql = 'DELETE FROM Clothing WHERE ClosetID = ?';
+    return db.run(sql, ClosetID);
+}
+
+
+
+
+// function clothingInCloset(closetID) {
+//     const sql = 'SELECT * FROM Clothing WHERE ClosetID = ?';
+//     return db.all(sql, [closetID]);
+// }
+
+
 module.exports = {
-    createCloset
+    createCloset,
+    deleteCloset,
+    addClothing,
+    deleteClothing,
+    getClosets,
+    getClothing,
+    clothingInCloset,
+    deleteAllClothing
 };
