@@ -25,13 +25,16 @@ function closetPage(req, res) {
 
 function autoFitPage(req, res) {
     try {
+        const closets = model.getClosets(req.session.Username);
         // res.sendfile('views/autoFit.html');
-        res.render("autoFit", {session: req.session});
+        const clothing = [];
+        res.render("autoFit", { session: req.session, closets, clothing}); 
     } catch (err) {
         console.error("Error while rendering autoFit page ", err.message);
         // next(err);
     }
 }
+
 
 function forSalePage(req, res) {
     try {

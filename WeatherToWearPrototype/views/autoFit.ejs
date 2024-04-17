@@ -22,11 +22,10 @@
                 <div class="col-md-6">
                     <label for="closet-select" class="form-label">Select
                         Closet:</label>
-                    <select class="form-select" id="closet-select">
-                        <!-- Closet selection -->
-                        <option value="closet1">Closet 1</option>
-                        <option value="closet2">Closet 2</option>
-                        <option value="closet3">Closet 3</option>
+                        <select class="form-select" id="closet-select">
+                            <% closets.forEach(closet => { %>
+                                <option value="<%= closet.id %>"><%= closet.ClosetName %></option>
+                            <% }); %>                            
                     </select>
                 </div>
             </div>
@@ -50,7 +49,6 @@
             function returnAutofit() {
                 // Fetch selected closet
                 var selectedCloset = document.getElementById("closet-select").value;
-                // Get user's location
                 if ("geolocation" in navigator) {
                     navigator.geolocation.getCurrentPosition(
                         function(position) {
