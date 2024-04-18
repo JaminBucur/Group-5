@@ -2,27 +2,11 @@
 const db = require("../models/db-conn");
 
 function createAd(adData) {
-    return new Promise((resolve, reject) => {
-        const sql = `
-            INSERT INTO Advertisement (Image, ClothingName, HeatIndex, Price, Description, Username)
-            VALUES (?, ?, ?, ?, ?, ?)
-        `;
-
-        db.run(sql, [
-            adData.Image,
-            adData.ClothingName,
-            adData.HeatIndex,
-            adData.Price,
-            adData.Description,
-            adData.Username
-        ], function(err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(this.lastID); // this.lastID contains the ID of the last inserted row
-            }
-        });
-    });
+    const sql = `INSERT INTO Advertisement (Image, ClothingName, HeatIndex, Price, Description, Username)
+        VALUES (?, ?, ?, ?, ?, ?)`;
+    const params = [adData.Image, adData.ClothingName, adData.HeatIndex, adData.Price, adData.Description, adData.Username];
+    return db.run(sql, params);
+        
 }
 
 // function to grab 1 ad

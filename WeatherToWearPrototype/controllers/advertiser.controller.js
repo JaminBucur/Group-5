@@ -51,25 +51,22 @@ function createAd(req, res) {
 }
 */
 function createAd(req, res) {
-    const adData = {
-        Image: req.file.filename,
-        ClothingName: req.body.ClothingName,
-        HeatIndex: req.body.HeatIndex,
-        Price: req.body.Price,
-        Description: req.body.Description,
-        Username: req.session.Username
-    };
+    try {
+        const adData = {
+            Image: req.file.filename,
+            ClothingName: req.body.ClothingName,
+            HeatIndex: req.body.HeatIndex,
+            Price: req.body.Price,
+            Description: req.body.Description,
+            Username: req.session.Username
+        };
 
-    model.createAd(adData)
-        .then(() => {
-            /** Supposed to refreshes page */
-            
-            res.redirect("/advertiser");
-            
-        })
-        .catch((err) => {
-            console.error("Error while creating ad ", err.message);
-        });
+        model.createAd(adData)
+        res.redirect("/advertiser");
+        
+    } catch(err) {
+        console.error("Error while creating ad ", err.message);
+    };
 }
 
 function getAdById(req, res) {

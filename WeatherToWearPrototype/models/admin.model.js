@@ -6,14 +6,14 @@ function getFlaggedComments() {
     return db.all(sql);
 }
 
-function dismissComment(Comment) {
-    const sql = `UPDATE Comments SET Flag = 0 WHERE Comment = ?`;
-    return db.run(sql, Comment);
+function dismissComment(CommentID) {
+    const sql = `UPDATE Comments SET Flag = 0 WHERE CommentID = ?`;
+    return db.run(sql, CommentID);
 }
 
-function deleteComment(Comment) {
-    const sql = `DELETE FROM Comments WHERE Comment = ?`;
-    return db.run(sql, Comment);
+function deleteComment(CommentID) {
+    const sql = `DELETE FROM Comments WHERE CommentID = ?`;
+    return db.run(sql, CommentID);
 }
 
 function deleteUserComments(Username) {
