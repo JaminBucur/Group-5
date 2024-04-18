@@ -16,3 +16,18 @@
     background-color: #222;
     color: #fff;
 }
+
+.dark-mode select {
+    background-color: #222;
+    color: #fff;
+}
+
+.dark-mode nav {
+    background-color: #747171;
+    color: #fff;
+}
+
+nav {
+    background-color: #f2f2f2;
+    color: #000;
+}
