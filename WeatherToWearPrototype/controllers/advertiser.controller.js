@@ -12,16 +12,18 @@ app.use(express.json());
 
 const model = require("../models/advertiser.model");
 
+
 function advertiserPage(req, res) {
-    try {
-        // res.sendfile('views/advertiser.html');
-        res.render("advertiser", {session: req.session});
-    } catch (err) {
-        console.error("Error while rendering advertiser page ", err.message);
-        // next(err);
-    }
+    Promise.all([model.getAdByPendingStatus(), model.getAdByActiveStatus()])
+        .then(([pendingAds, activeAds]) => {
+            res.render('advertiser', { pendingAds: pendingAds, activeAds: activeAds, session: req.session });
+        })
+        .catch((err) => {
+            console.error("Error while rendering advertiser page ", err.message);
+        });
 }
 
+/*
 function createAd(req, res) {
     try {
         // console.log(req.body);
@@ -47,8 +49,87 @@ function createAd(req, res) {
         // next(err);
     }
 }
+*/
+function createAd(req, res) {
+    const adData = {
+        Image: req.file.filename,
+        ClothingName: req.body.ClothingName,
+        HeatIndex: req.body.HeatIndex,
+        Price: req.body.Price,
+        Description: req.body.Description,
+        Username: req.session.Username
+    };
+
+    model.createAd(adData)
+        .then(() => {
+            /** Supposed to refreshes page */
+            
+            res.redirect("/advertiser");
+            
+        })
+        .catch((err) => {
+            console.error("Error while creating ad ", err.message);
+        });
+}
+
+function getAdById(req, res) {
+    try {
+        const AdID = req.params.AdID;
+        model.getAdById(AdID)
+        .then((ad) => {
+            res.send(ad);
+        })
+        .catch((err) => {
+            console.error("Error while getting ad by id ", err.message);
+            // next(err);
+        });
+    } catch (err) {
+        console.error("Error while getting ad by id ", err.message);
+        // next(err);
+    }
+}
+
+function getAllAds(req, res) {
+    try {
+        model.getAllAds()
+        .then((ads) => {
+            res.send(ads);
+        })
+        .catch((err) => {
+            console.error("Error while getting all ads ", err.message);
+            // next(err);
+        });
+    } catch (err) {
+        console.error("Error while getting all ads ", err.message);
+        // next(err);
+    }
+}
+
+function getAdByActiveStatus(req, res) {
+    model.getAdByActiveStatus()
+    .then((activeAds) => {
+        res.render('advertiser', { ads: activeAds, session: req.session });
+    })
+    .catch((err) => {
+        console.error("Error while getting ad by active status ", err.message);
+    });
+}
+
+function getAdByPendingStatus(req, res) {
+    model.getAdByPendingStatus()
+    .then((pendingAds) => {
+        res.render('advertiser', { ads: pendingAds, session: req.session });
+    })
+    .catch((err) => {
+        console.error("Error while getting ad by pending status ", err.message);
+    });
+}
 
 module.exports = {
     advertiserPage,
-    createAd
+    createAd,
+    getAdById,
+    getAllAds,
+    getAdByActiveStatus,
+    getAdByPendingStatus,
 };
