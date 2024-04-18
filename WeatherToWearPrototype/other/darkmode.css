@@ -6,3 +6,13 @@
 .dark-mode h2 {
     color: #fff; 
 }
+
+.dark-mode input {
+    background-color: #222;
+    color: #fff;
+}
+
+.dark-mode textarea {
+    background-color: #222;
+    color: #fff;
+}
