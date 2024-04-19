@@ -12,6 +12,10 @@ const model = require("../models/admin.model");
 
 function commentsPage(req, res) {
     try {
+        if (req.session.Status !== "admin") {
+            res.redirect("/home");
+            return;
+        }
         const comments = model.getFlaggedComments();
         res.render("admin", {session: req.session, comments});
     } catch (err) {
@@ -21,6 +25,10 @@ function commentsPage(req, res) {
 
 function bannedUsersPage(req, res) {
     try {
+        if (req.session.Status !== "admin") {
+            res.redirect("/home");
+            return;
+        }
         const users = model.getBannedUsers();
         res.render("bannedUsers", {session: req.session, users});
     } catch (err) {
@@ -30,6 +38,10 @@ function bannedUsersPage(req, res) {
 
 function adsPage(req, res) {
     try {
+        if (req.session.Status !== "admin") {
+            res.redirect("/home");
+            return;
+        }
         const ads = model.getAds();
         res.render("manageAds", {session: req.session, ads});
     } catch (err) {
