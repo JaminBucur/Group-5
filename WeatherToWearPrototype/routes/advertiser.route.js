@@ -15,6 +15,9 @@ module.exports = function (imageUpload) {
 
     router.get("/getAllAds", advertiserController.getAllAds);
     
+    router.post("/createDiscount", advertiserController.createDiscount);
+    
+    router.get("/getDiscountSales/:id", advertiserController.getDiscountSaleById);
     /*
     router.get("/getAdByActiveStatus", advertiserController.getAdByActiveStatus);
 

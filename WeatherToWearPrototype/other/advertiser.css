@@ -1,0 +1,5 @@
+#sales-list {
+    height: auto;
+    overflow-y: auto;
+    max-height: 100px;
+}

@@ -14,42 +14,15 @@ const model = require("../models/advertiser.model");
 
 
 function advertiserPage(req, res) {
-    Promise.all([model.getAdByPendingStatus(), model.getAdByActiveStatus()])
-        .then(([pendingAds, activeAds]) => {
-            res.render('advertiser', { pendingAds: pendingAds, activeAds: activeAds, session: req.session });
+    Promise.all([model.getDiscountSales(), model.getAdByPendingStatus(), model.getAdByActiveStatus()])
+        .then(([discountSales, pendingAds, activeAds]) => {
+            res.render('advertiser', { discountSales: discountSales, pendingAds: pendingAds, activeAds: activeAds, session: req.session });
         })
         .catch((err) => {
             console.error("Error while rendering advertiser page ", err.message);
         });
 }
 
-/*
-function createAd(req, res) {
-    try {
-        // console.log(req.body);
-        const Username = req.session.Username;
-        let Image = null;
-        const Description = req.body.Description;
-        const image = req.file;
-
-        if (image) {
-            const imageName = image.originalname;
-            const imagePath = path.join(__dirname, '..', image.path);
-            const imageData = fs.readFileSync(imagePath);
-            const newImagePath = path.join(__dirname, '..', 'images', imageName);
-            fs.writeFileSync(newImagePath, imageData);
-            Image = imageName;
-        }
-        
-        
-        model.createAd(Username, Image, Description)
-        res.redirect("/advertiser");
-    } catch (err) {
-        console.error("Error while creating ad ", err.message);
-        // next(err);
-    }
-}
-*/
 function createAd(req, res) {
     try {
         const adData = {
@@ -57,6 +30,7 @@ function createAd(req, res) {
             ClothingName: req.body.ClothingName,
             HeatIndex: req.body.HeatIndex,
             Price: req.body.Price,
+            Sale: req.body.Sale,
             Description: req.body.Description,
             Username: req.session.Username
         };
@@ -67,6 +41,51 @@ function createAd(req, res) {
     } catch(err) {
         console.error("Error while creating ad ", err.message);
     };
+}
+
+function createDiscount(req, res) {
+    try {
+        const saleData = {
+            Name: req.body.saleName,
+            StartDate: req.body.saleMinDate,
+            StartTime: req.body.saleMinTime,
+            EndDate: req.body.saleMaxDate,
+            EndTime: req.body.saleMaxTime,
+            Discount: req.body.saleDiscount,
+            SaleDescription: req.body.saleDescription
+        };
+
+        model.createDiscount(saleData)
+        res.redirect("/advertiser");
+    } catch(err) {
+        console.error("Error while creating discount ", err.message);
+    };
+}
+
+/*
+function getDiscountSaleById(req, res){
+    console.log("This is the requested saleID", req.body.SaleID );
+    try {
+        const SaleID = Number(req.body.SaleID);
+        const sale = model.getDiscountSaleById(SaleID);
+        res.render('advertiser-manageSales', { sale: sale });
+    } catch(err){
+        console.error("Error while getting discount sale by id ", err.message);
+    }
+}
+*/
+
+function getDiscountSaleById(req, res){
+    console.log(req.body.SaleID, typeof req.body.SaleID);
+    let SaleID = req.params.id;
+    try{
+        let sale = model.getDiscountSaleById(SaleID);
+        res.render('advertiser-manageSales', { sale: sale });
+    } catch(err){
+        console.error("Error while getting discount sale by id ", err.message);
+    
+    }
+    
 }
 
 function getAdById(req, res) {
@@ -125,6 +144,8 @@ function getAdByPendingStatus(req, res) {
 module.exports = {
     advertiserPage,
     createAd,
+    createDiscount,
+    getDiscountSaleById,
     getAdById,
     getAllAds,
     getAdByActiveStatus,

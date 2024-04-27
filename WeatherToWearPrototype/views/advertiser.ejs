@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advertiser - Weather To Wear</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- currently not working, fix later
+    <link rel="stylesheet" href="./other/advertiser.css">
+    -->
 </head>
 
 <body>
@@ -33,6 +36,7 @@
                 <label for="ad-Price" class="form-label">Price</label>
                 <textarea class="form-control" name="Price" rows="1" required></textarea>
             </div>
+
             <div class="mb-3">
                 <label for="ad-description" class="form-label">Description</label>
                 <textarea class="form-control" name="Description" rows="3" required></textarea>
@@ -41,9 +45,83 @@
             <button type="submit" class="btn btn-primary">Submit Ad</button>
         </form>
 
-        <!-- Listings -->
+        <!-- Schedule and Listings -->
         <div class="mt-5">
+            <!-- Dropdown Menu of Schedule Sales -->
+            <h2>Manage Sales</h2>
+            <hr>
+            
+            <table class = "table">
+                <thead>
+                    <tr>Name of Sale</tr>
+                    <tr>Actions</tr>
+                </thead>
+                <tbody>
+                    <% discountSales.forEach(function(sale) { %>
+                        <tr>
+                            <td><%= sale.Name %></td>
+                            <td>
+                                <div>
+                                    <a href="/getDiscountSales/<%= sale.dsID %>" class="btn btn-primary">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+
+            <h3>View Sales</h3>
+            <form action="/getDiscountSales" method="post">
+                <div class="input-group mb-3">
+                    <select class="form-select" id="sales-list" name="SaleID">
+                        <% discountSales.forEach(function(sale) { %>
+                            <option value="<%= sale.dsID %>">
+                                <%= sale.Name %>
+                            </option>
+                            <% }); %>
+                    </select>
+                    <button type="submit" class="btn btn-primary">View</button>
+                </div>
+            </form>
+
+            <h3>Create Sale</h3>
+            <!-- Form for creating a sale -->
+            <form action="/createDiscount" method="post">
+                <div class="mb-3">
+                    <label for="saleName" class="form-label">Sale Name</label>
+                    <input type="text" class="form-control" id="saleName" name="saleName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleMinDate" class="form-label">Sale Start Date</label>
+                    <input type="date" class="form-control" id="saleMinDate" name="saleMinDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleMinTime" class="form-label">Sale Start Time</label>
+                    <input type="time" class="form-control" id="saleMinTime" name="saleMinTime" required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleMaxDate" class="form-label">Sale End Date</label>
+                    <input type="date" class="form-control" id="saleMaxDate" name="saleMaxDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleMaxTime" class="form-label">Sale End Time</label>
+                    <input type="time" class="form-control" id="saleMaxTime" name="saleMaxTime" required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleDiscount" class="form-label">Sale Discount (%)</label>
+                    <input type="number" class="form-control" id="saleDiscount" name="saleDiscount" min="0" max="90"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="saleDescription" class="form-label">Sale Description</label>
+                    <textarea class="form-control" id="saleDescription" name="saleDescription" rows="3"
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Sale</button>
+            </form>
+
             <!-- Active Listings will show all the items with a Status = 1 value-->
+            <hr>
             <h2>Active Listings</h2>
             <!-- ActiveAds is key-->
             <div class="row">
@@ -70,8 +148,9 @@
                     </div>
                     <% }); %>
             </div>
-            
+
             <!-- Pending Listings will show all the items with a Status = 0 value-->
+            <hr>
             <h2>Pending Listings</h2>
             <!-- pendingAds is key-->
             <div class="row">
