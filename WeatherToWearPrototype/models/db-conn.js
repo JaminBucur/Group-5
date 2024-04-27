@@ -8,13 +8,21 @@ function all(sql, ...params) {
   return db.prepare(sql).all(params);
 }
 
+
 function get(sql, ...params) {
   return db.prepare(sql).get(params);
 }
 
+
 function run(sql, ...params) {
   return db.prepare(sql).run(params[0]);
 }
+
+/*
+function get(sql, ...params) {
+  return db.prepare(sql).get(...params);
+}
+*/
 
 module.exports = {
   all,

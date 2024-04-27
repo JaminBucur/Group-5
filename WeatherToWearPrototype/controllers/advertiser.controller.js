@@ -11,6 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const model = require("../models/advertiser.model");
+const { get } = require("http");
 
 
 function advertiserPage(req, res) {
@@ -80,13 +81,37 @@ function getDiscountSaleById(req, res){
     let SaleID = req.params.id;
     try{
         let sale = model.getDiscountSaleById(SaleID);
-        res.render('advertiser-manageSales', { sale: sale });
+        res.render('advertiser-manageSales', { sale: sale, session: req.session });
     } catch(err){
         console.error("Error while getting discount sale by id ", err.message);
     
     }
     
 }
+
+/*
+function getAdByIdSite(req, res) {
+    let AdID = req.params.AdID;
+    try {
+        let ad = model.getAdById(AdID);
+        res.render('advertiser-viewItem', { ad: ad });
+    } catch(err){    
+        console.error("Error while getting ad by id ", err.message);
+    }
+}
+*/
+
+async function getAdByIdSite(req, res) {
+    let AdID = req.params.AdID;
+    try {
+        let ad = await model.getAdById(AdID);
+        res.render('advertiser-viewItem', { ad: ad, session: req.session });
+    } catch(err){    
+        console.error("Error while getting ad by id ", err.message);
+    }
+}
+
+
 
 function getAdById(req, res) {
     try {
@@ -147,6 +172,7 @@ module.exports = {
     createDiscount,
     getDiscountSaleById,
     getAdById,
+    getAdByIdSite,
     getAllAds,
     getAdByActiveStatus,
     getAdByPendingStatus,

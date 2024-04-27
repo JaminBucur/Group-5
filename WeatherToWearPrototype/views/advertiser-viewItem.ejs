@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertiser - Weather To Wear</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- currently not working, fix later
+    <link rel="stylesheet" href="./other/advertiser.css">
+    -->
+</head>
+
+<body>
+    <header>
+        <%- include('partials/navbar') %>
+    </header>
+
+    <div class="container">
+        <h2>Advertiser</h2>
+
+
+
+        <div class="mt-5">
+            <!-- Dropdown Menu of Schedule Sales -->
+            <h2>View Clothing</h2>
+            <hr>
+            <h1>
+                <%= ad.Name %>
+            </h1>
+            <!-- Form for creating a sale -->
+            <form action="/createDiscount" method="post">
+                <div class="mb-3">
+                    <label for="ad-image" class="form-label">Image</label>
+                    <input type="file" class="form-control" name="Image" required accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <label for="ad-ClothingName" class="form-label">Clothing Name</label>
+                    <textarea class="form-control" name="ClothingName" rows="1"
+                        required><%= ad.ClothingName %></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="ad-HeatIndex" class="form-label">Heat Index</label>
+                    <textarea class="form-control" name="HeatIndex" rows="1" required><%= ad.HeatIndex %></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="ad-Price" class="form-label">Price</label>
+                    <textarea class="form-control" name="Price" rows="1" required><%= ad.Price %></textarea>
+                </div>
+
+                <!--This is where the Sale Price would be-->
+
+                <div class="mb-3">
+                    <label for="ad-description" class="form-label">Description</label>
+                    <textarea class="form-control" name="Description" rows="3" required><%= ad.Description %></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Sale</button>
+                <button type="submit" class="btn btn-primary">Delete Sale</button>
+            </form>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="advertiser.js"></script>
+</body>
+
+</html>

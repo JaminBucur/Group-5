@@ -13,6 +13,8 @@ module.exports = function (imageUpload) {
 
     router.get("/getAdById/:AdID", advertiserController.getAdById);
 
+    router.get("/getAdByIdSite/:AdID", advertiserController.getAdByIdSite);
+
     router.get("/getAllAds", advertiserController.getAllAds);
     
     router.post("/createDiscount", advertiserController.createDiscount);

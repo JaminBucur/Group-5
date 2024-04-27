@@ -25,14 +25,14 @@ function getDiscountSaleById(SaleID){
     SaleID = Number(SaleID);
     const sql = `SELECT * FROM DiscountSales WHERE dsID = ?`;
     const params = [SaleID];
-    return db.get(sql, params);
+    return db.get(sql, ...params);
 }
 
 // function to grab 1 ad
 function getAdById(AdID) {
     const sql = `SELECT * FROM Advertisement WHERE AdID = ?`;
     const params = [AdID];
-    return db.get(sql, params);
+    return db.get(sql, ...params);
 }
 
 function getAllAds() {
