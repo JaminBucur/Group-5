@@ -26,14 +26,15 @@ function closetPage(req, res) {
 function autoFitPage(req, res) {
     try {
         const closets = model.getClosets(req.session.Username);
-        // res.sendfile('views/autoFit.html');
-        const clothing = [];
-        res.render("autoFit", { session: req.session, closets, clothing}); 
+        const selectedClosetID = req.query.ClosetID; 
+        const clothing = model.getClothing(selectedClosetID);
+        res.render("autoFit", { session: req.session, closets, clothing }); 
     } catch (err) {
         console.error("Error while rendering autoFit page ", err.message);
-        // next(err);
+        // Handle error
     }
 }
+
 
 
 function forSalePage(req, res) {
@@ -99,6 +100,19 @@ function clothingInCloset(req, res) {
     }
 }
 
+function clothingInClosetAutoFit(req, res) {
+    try {
+        const closetID = req.body.ClosetID;
+        const clothing = model.getClothing(closetID);
+        res.json({ clothing });
+    } catch (error) {
+        console.error("Error while getting clothing in closet ", error.message);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+
+
 function deleteClothing(req, res) {
     try {
         const clothingID = req.body.ClothingID;
@@ -139,6 +153,7 @@ module.exports = {
     addClothing,
     clothingInCloset,
     deleteClothing,
-    deleteCloset
+    deleteCloset,
+    clothingInClosetAutoFit
 
 };

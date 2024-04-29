@@ -13,6 +13,7 @@ router.get("/itemDisplay", userController.itemDisplayPage);
 router.post("/createCloset", userController.createCloset);
 router.post("/addClothing", userController.addClothing);
 router.post("/displayClothing", userController.clothingInCloset);
+router.post("/displayClothing2", userController.clothingInClosetAutoFit);
 router.post("/deleteClothing", userController.deleteClothing);
 router.post("/deleteCloset", userController.deleteCloset);
 

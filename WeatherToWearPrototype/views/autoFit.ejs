@@ -1,95 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>AutoFit - Weather To Wear</title>
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-            rel="stylesheet">
-        <!-- Dark mode refs -->
-        <link rel="stylesheet" href="../other/darkmode.css">
-        <script src="../other/darkmode.js"></script>
-    </head>
-    <body>
-        <header>
-            <%- include('partials/navbar') %>
-        </header>
 
-        <div class="container mt-5">
-            <h2>AutoFit</h2>
-            <!-- Dark mode -->
-            <button id="dark-mode-toggle">Dark Mode</button>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFit - Weather To Wear</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+    <!-- Dark mode refs -->
+    <link rel="stylesheet" href="../other/darkmode.css">
+    <script src="../other/darkmode.js"></script>
+  </head>
 
-            <p>Select a user-made closet and click
-                "Generate Fit" to find the best fit based on the
-                weather.</p>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="closet-select" class="form-label">Select
-                        Closet:</label>
-                    <select class="form-select" id="closet-select">
-                        <% closets.forEach(closet => { %>
-                        <option value="<%= closet.id %>"><%= closet.ClosetName
-                            %></option>
-                        <% }); %>
-                    </select>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <button class="btn btn-primary" onclick="returnAutofit()"
-                        id="generate-fit-btn">Generate Fit</button>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-6">
-                    <div id="outfit-recommendation"></div>
-                </div>
-            </div>
+  <body>
+    <header>
+      <%- include('partials/navbar') %>
+    </header>
+
+    <div class="container mt-5">
+      <h2>AutoFit</h2>
+      <!-- Dark mode -->
+      <button id="dark-mode-toggle">Dark Mode</button>
+      <p>Select a user-made closet and click "Generate Fit" to find the
+        best fit based on the weather.</p>
+      <!-- Display options -->
+      <div class="row">
+        <div class="col-md-6">
+          <label for="closet-select" class="form-label">Select
+            Closet:</label>
+          <select class="form-select" id="closet-select">
+            <% closets.forEach(closet => { %>
+            <option value="<%= closet.ClosetID %>"><%=
+              closet.ClosetName %></option>
+            <% }); %>
+          </select>
         </div>
+      </div>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="autoFit.js"></script>
-        <script>
-            function returnAutofit() {
-                // Fetch selected closet
-                var selectedCloset = document.getElementById("closet-select").value;
-                if ("geolocation" in navigator) {
-                    navigator.geolocation.getCurrentPosition(
-                        function(position) {
-                            const latitude = position.coords.latitude;
-                            const longitude = position.coords.longitude;
-                                fetch(`https://api.weather.gov/points/${latitude},${longitude}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    const city = data.properties.relativeLocation.properties.city;
-                                    const state = data.properties.relativeLocation.properties.state;
-                                    const forecastEndpoint = data.properties.forecast;
-                                    fetch(forecastEndpoint)
-                                        .then(response => response.json())
-                                        .then(forecastData => {
-                                            const periods = forecastData.properties.periods;
-                                            const currentPeriod = periods[0];
-                                            console.log("Temperature:", currentPeriod.temperature);
-                                            var outfitRecommendation = "The weather in " + city + "," + state +  " is currently " + currentPeriod.temperature + "°F.";
-                                            // TODO CLOSET RECC
-                                            // Display outfit recommendation
-                                            document.getElementById("outfit-recommendation").innerHTML = outfitRecommendation;
-                                        })
-                                        .catch(error => console.error("API ERROR:", error));
-                                })
-                                .catch(error => console.error("Error fetching geolocation data:", error));
+      <div id="clothing-data" style="display: none;"></div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <form id="generate-fit-form">
+            <button type="submit" class="btn btn-primary"
+              id="generate-fit-btn">Generate Fit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div id="outfit-recommendation"></div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.getElementById("generate-fit-form").addEventListener("submit", function(event) {
+      event.preventDefault(); 
+      returnAutofit();
+    });
+
+    //AutoFit Function 
+    function returnAutofit() {
+      var selectedCloset = document.getElementById("closet-select").value;
+      console.log("Closet", selectedCloset);
+      //location
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            //api call
+            fetch(`https://api.weather.gov/points/${latitude},${longitude}`)
+              .then(response => response.json())
+              .then(data => {
+                //city state
+                const city = data.properties.relativeLocation.properties.city;
+                const state = data.properties.relativeLocation.properties.state;
+                const forecastEndpoint = data.properties.forecast;
+                //current temp
+                fetch(forecastEndpoint)
+                  .then(response => response.json())
+                  .then(forecastData => {
+                    const periods = forecastData.properties.periods;
+                    const currentPeriod = periods[0];
+                    console.log("Temperature:", currentPeriod.temperature);
+                    //weather report
+                    var outfitRecommendation = "The weather in " + city + "," + state + " is currently " + currentPeriod.temperature + "°F.";
+                    //closetcall
+                    fetch("/displayClothing2", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
                         },
-                        function(error) {
-                            console.error("Error getting user's location:", error);
-                        }
-                    );
-                } else {
-                    console.error("Geolocation is not supported by this browser.");
-                }
-            } 
-        </script>
-    </body>
+                        body: JSON.stringify({
+                          ClosetID: selectedCloset
+                        })
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                        document.getElementById("clothing-data").textContent = JSON.stringify(data);
+                        const recommendedClothing = generateRecommendation(data, currentPeriod.temperature);
+                        outfitRecommendation += "<br>Recommended Clothing: " + recommendedClothing;
+                        document.getElementById("outfit-recommendation").innerHTML = outfitRecommendation;
+                      })
+                      .catch(error => console.error("Error with clothing data:", error));
+                  })
+                  .catch(error => console.error("API ERROR:", error));
+              })
+              .catch(error => console.error("Error with geolocation data:", error));
+          },
+          function(error) {
+            console.error("Hip Hopiity No Location:", error);
+          }
+        );
+      } else {
+        console.error("NO GEOLOCATIONS.");
+      }
+    }
+
+    //make recc
+    function generateRecommendation(clothingData, temperature) {
+      console.log("Received clothing data:", clothingData);
+
+      const clothingArray = clothingData.clothing;
+      const shirts = [];
+      const pants = [];
+      const jackets = [];
+
+      clothingArray.forEach(item => {
+        if (item.ClothingType === "Short Sleeved Shirt" || item.ClothingType === "Long Sleeved Shirt") {
+          shirts.push(item);
+        } else if (item.ClothingType === "Pants" || item.ClothingType === "Shorts" || item.ClothingType === "Dress") {
+          pants.push(item);
+        } else if (item.ClothingType === "Jacket") {
+          jackets.push(item);
+        }
+      });
+
+      let recommendation = "";
+      if (shirts.length === 0) {
+        recommendation += "Your closet lacks a shirt. ";
+      }
+      if (pants.length === 0) {
+        recommendation += "Your closet lacks pants. ";
+      }
+
+      
+
+      if (temperature >= 75 && shirts.length > 0 && pants.length > 0) {
+        // If temperature is above 75
+        const randomShirtIndex = Math.floor(Math.random() * shirts.length);
+        const randomPantsIndex = Math.floor(Math.random() * pants.length);
+        const recommendedShirt = shirts[randomShirtIndex];
+        const recommendedPants = pants[randomPantsIndex];
+        recommendation += `Recommended Clothing: ${recommendedShirt.ClothingName}, ${recommendedPants.ClothingName}`;
+        
+      } else if (shirts.length > 0 && pants.length > 0 && jackets.length === 0) {
+        // If temperature is below 75
+        const randomShirtIndex = Math.floor(Math.random() * shirts.length);
+        const randomPantsIndex = Math.floor(Math.random() * pants.length);
+        const recommendedShirt = shirts[randomShirtIndex];
+        const recommendedPants = pants[randomPantsIndex];
+        recommendation += `Recommended Clothing: ${recommendedShirt.ClothingName}, ${recommendedPants.ClothingName}. You lack a jacket.`;
+      } else if (shirts.length > 0 && pants.length > 0) {
+        // If temperature is below 75
+        const randomShirtIndex = Math.floor(Math.random() * shirts.length);
+        const randomPantsIndex = Math.floor(Math.random() * pants.length);
+        const randomJacketIndex = Math.floor(Math.random() * jackets.length);
+        const recommendedShirt = shirts[randomShirtIndex];
+        const recommendedPants = pants[randomPantsIndex];
+        const reccomendedJacket = jacket[randomJacketIndex];
+        recommendation += `Recommended Clothing: ${recommendedShirt.ClothingName}, ${recommendedPants.ClothingName}, ${reccomendedJacket.ClothingName}`;
+      }
+
+
+      return recommendation || "Your closet has all the necessary items!";
+    }
+  </script>
+  </body>
+
 </html>
