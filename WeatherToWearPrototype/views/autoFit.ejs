@@ -100,7 +100,7 @@
                       .then(data => {
                         document.getElementById("clothing-data").textContent = JSON.stringify(data);
                         const recommendedClothing = generateRecommendation(data, currentPeriod.temperature);
-                        outfitRecommendation += "<br>Recommended Clothing: " + recommendedClothing;
+                        outfitRecommendation += recommendedClothing;
                         document.getElementById("outfit-recommendation").innerHTML = outfitRecommendation;
                       })
                       .catch(error => console.error("Error with clothing data:", error));
@@ -138,13 +138,16 @@
       });
 
       let recommendation = "";
-      if (shirts.length === 0) {
-        recommendation += "Your closet lacks a shirt. ";
+      if (pants.length === 0 && shirts.length === 0) {
+          recommendation += " At least 1 set of shirts and pants are needed. Unable to generate fit.";
       }
-      if (pants.length === 0) {
-        recommendation += "Your closet lacks pants. ";
+      else if (shirts.length === 0) {
+        recommendation += "Your closet lacks a shirt. Unable to generate fit.";
       }
-
+      else if (pants.length === 0) {
+        recommendation += "Your closet lacks pants. Unable to generate fit.";
+      }
+      
       
 
       if (temperature >= 75 && shirts.length > 0 && pants.length > 0) {
@@ -161,7 +164,7 @@
         const randomPantsIndex = Math.floor(Math.random() * pants.length);
         const recommendedShirt = shirts[randomShirtIndex];
         const recommendedPants = pants[randomPantsIndex];
-        recommendation += `Recommended Clothing: ${recommendedShirt.ClothingName}, ${recommendedPants.ClothingName}. You lack a jacket.`;
+        recommendation += `Recommended Clothing: ${recommendedShirt.ClothingName}, ${recommendedPants.ClothingName}. The weather is very cold. It is reccomended to add a jacket to your closet.`;
       } else if (shirts.length > 0 && pants.length > 0) {
         // If temperature is below 75
         const randomShirtIndex = Math.floor(Math.random() * shirts.length);
