@@ -16,6 +16,7 @@ router.post("/displayClothing", userController.clothingInCloset);
 router.post("/displayClothing2", userController.clothingInClosetAutoFit);
 router.post("/deleteClothing", userController.deleteClothing);
 router.post("/deleteCloset", userController.deleteCloset);
+router.post("/getAdByActiveStatus" , userController.getAdByActiveStatus);
 
 
 

@@ -1,27 +1,6 @@
 "use strict";
 const db = require("../models/db-conn");
 
-
-
-// function createCloset(closetName, closetName) {
-//     const username = req.body.Username;
-//     const closetName = req.body.ClosetName;
-
-//     if (!closetName) {
-//         res.status(INVALID_PARAM_ERROR).send('Invalid closet name');
-//         return;
-//     }
-//     try {
-//         const db = getDBConnection();
-//         db.run('INSERT INTO Closets (Username, ClosetName) VALUES (?, ?)', username, closetName);
-//         db.close();
-//         res.send('Closet added');
-//     } catch (err) {
-//         console.error(err);
-//         res.status(SERVER_ERROR).send(SERVER_ERROR_MSG);
-//     }
-// }
-
 function createCloset(username, closetName) {
     let sql = `INSERT INTO Closets (Username, ClosetName) VALUES (?, ?)`;
     const params = [username, closetName];
@@ -68,13 +47,12 @@ function deleteAllClothing(ClosetID) {
     return db.run(sql, ClosetID);
 }
 
-
-
-
-// function clothingInCloset(closetID) {
-//     const sql = 'SELECT * FROM Clothing WHERE ClosetID = ?';
-//     return db.all(sql, [closetID]);
-// }
+// function to get Ads that have a Status equal to 1 in the sql database
+function getAdByActiveStatus(){
+    const sql = `SELECT * FROM Advertisement WHERE Status = 1`;
+    console.log(sql + "dwdwawadwdawadwad")
+    return db.all(sql);
+}
 
 
 module.exports = {
@@ -85,5 +63,6 @@ module.exports = {
     getClosets,
     getClothing,
     clothingInCloset,
-    deleteAllClothing
+    deleteAllClothing,
+    getAdByActiveStatus
 };

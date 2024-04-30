@@ -37,15 +37,16 @@ function autoFitPage(req, res) {
 
 
 
-function forSalePage(req, res) {
+async function forSalePage(req, res) {
     try {
-        // res.sendfile('views/forSale.html');
-        res.render("forSale", {session: req.session});
+        const activeAds = await model.getAdByActiveStatus(); 
+        res.render("forSale", { activeAds, session: req.session });
     } catch (err) {
         console.error("Error while rendering forSale page ", err.message);
-        // next(err);
+        res.status(500).send("Internal Server Error"); 
     }
 }
+
 
 function itemDisplayPage(req, res) {
     try {
@@ -134,13 +135,17 @@ function deleteCloset(req, res) {
     }
 }
 
-// function getClosets(req, res) {
-//     try {
-//         model.getClosets();
-//     } catch (err) {
-//         console.error("Error while getting closets ", err.message);
-//     }
-// }
+function getAdByActiveStatus(req, res) {
+    model.getAdByActiveStatus()
+        .then((activeAds) => {
+            console.log(activeAds);
+            res.render('forSale', { activeAds: activeAds, session: req.session });
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+        });
+}
 
 
 module.exports = {
@@ -154,6 +159,6 @@ module.exports = {
     clothingInCloset,
     deleteClothing,
     deleteCloset,
-    clothingInClosetAutoFit
-
+    clothingInClosetAutoFit,
+    getAdByActiveStatus
 };
