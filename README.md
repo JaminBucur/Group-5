@@ -15,7 +15,7 @@ Weather to Wear is an application that would tell users what to wear based off t
 Eliminate the choice from your day. Have the Auto-Fit select the best most suitable apparel for the day. The app will automatically choose the best clothing to wear based on the weather. Also, it allows for advertisements that help the user fill their closet with clothes. And no need to worry about inapropiate ads or comments since there is an Administrator that approves the ads and filter the comments.
 
 ## How to Use?
-First, install neccessary dependencies. Next run the app.js server. Then open a web browser and go to: http://localhost:8000/home. Login in with one of the dummy accounts to test. <br>
+First, install neccessary dependencies. Next run the app.js server. Then open a web browser and go to: http://localhost:8000/home. Login in with one of the dummy accounts to test. Explore what features each user offers. <br>
 Test **User**: Username: **Mark**	Password: **123**	<br>
 Test **Advertiser**: Username: **Jimmy**	Password: **123**	<br>
 Test **Admin**: Username: **Matthew**	 Password: **101**
