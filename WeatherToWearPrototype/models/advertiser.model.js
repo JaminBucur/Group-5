@@ -2,9 +2,9 @@
 const db = require("../models/db-conn");
 
 function createAd(adData) {
-    const sql = `INSERT INTO Advertisement (Image, ClothingName, HeatIndex, Price, Sale, Description, Username)
+    const sql = `INSERT INTO Advertisement (Image, ClothingName, HeatIndex, Price, SalePrice, Description, Username)
         VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const params = [adData.Image, adData.ClothingName, adData.HeatIndex, adData.Price, adData.Sale, adData.Description, adData.Username];
+    const params = [adData.Image, adData.ClothingName, adData.HeatIndex, adData.Price, adData.SalePrice, adData.Description, adData.Username];
     return db.run(sql, params);
 
 }

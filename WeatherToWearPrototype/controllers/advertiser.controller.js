@@ -31,7 +31,7 @@ function createAd(req, res) {
             ClothingName: req.body.ClothingName,
             HeatIndex: req.body.HeatIndex,
             Price: req.body.Price,
-            Sale: req.body.Sale,
+            SalePrice: req.body.SalePrice,
             Description: req.body.Description,
             Username: req.session.Username
         };
