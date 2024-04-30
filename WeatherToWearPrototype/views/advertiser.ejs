@@ -57,7 +57,7 @@
             <table class = "table">
                 <thead>
                     <tr>Name of Sale</tr>
-                    <tr>Actions</tr>
+                    <!--<tr>Actions</tr>-->
                 </thead>
                 <tbody>
                     <% discountSales.forEach(function(sale) { %>
@@ -148,7 +148,10 @@
                                 <p class="card-text">
                                     <%= ad.Description %>
                                 </p>
+                                <!-- Possibly may remove this because there is no point in Admin Approval 
+                                        if Advertiser can make an unnoticed change later -->
                                 <a href="/getAdByIdSite/<%=ad.AdID %>" class="btn btn-primary">View Details</a>
+                                
                             </div>
                         </div>
                     </div>
@@ -180,7 +183,7 @@
                                 <p class="card-text">
                                     <%= ad.Description %>
                                 </p>
-                                <a href="#" class="btn btn-primary">View Details</a>
+                                <a href="/getAdByIdSite/<%=ad.AdID %>" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>
