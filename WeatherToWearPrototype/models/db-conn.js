@@ -2,6 +2,8 @@
 
 const sqlite = require("better-sqlite3");
 const path = require("path");
+
+// if debugging with database2, change the path to database2.db
 const db = new sqlite(path.resolve("database.db"), { fileMustExist: true });
 
 function all(sql, ...params) {
