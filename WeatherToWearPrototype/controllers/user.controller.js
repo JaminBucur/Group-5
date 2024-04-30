@@ -138,7 +138,7 @@ function deleteCloset(req, res) {
 function getAdByActiveStatus(req, res) {
     model.getAdByActiveStatus()
         .then((activeAds) => {
-            console.log(activeAds);
+            // console.log(activeAds);
             res.render('forSale', { activeAds: activeAds, session: req.session });
         })
         .catch((error) => {

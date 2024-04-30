@@ -50,7 +50,7 @@ function deleteAllClothing(ClosetID) {
 // function to get Ads that have a Status equal to 1 in the sql database
 function getAdByActiveStatus(){
     const sql = `SELECT * FROM Advertisement WHERE Status = 1`;
-    console.log(sql + "dwdwawadwdawadwad")
+    // console.log(sql + "dwdwawadwdawadwad")
     return db.all(sql);
 }
 
