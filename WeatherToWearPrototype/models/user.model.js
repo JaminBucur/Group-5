@@ -54,6 +54,27 @@ function getAdByActiveStatus(){
     return db.all(sql);
 }
 
+function getAd(AdID){
+    const sql = `SELECT * FROM Advertisement WHERE AdID = ?`;
+    return db.get(sql, AdID);
+}
+
+function getAdComments(AdID){
+    const sql = `SELECT * FROM Comments WHERE AdID = ?`;
+    return db.all(sql, AdID);
+}
+
+function postComment(AdID, Username, Comment){
+    const sql = `INSERT INTO Comments (AdID, Username, Comment) VALUES (?, ?, ?)`;
+    const params = [AdID, Username, Comment];
+    return db.run(sql, params);
+}
+
+function flagComment(CommentID){
+    const sql = `UPDATE Comments SET Flag = 1 WHERE CommentID = ?`;
+    return db.run(sql, CommentID);
+}
+
 
 module.exports = {
     createCloset,
@@ -64,5 +85,9 @@ module.exports = {
     getClothing,
     clothingInCloset,
     deleteAllClothing,
-    getAdByActiveStatus
+    getAdByActiveStatus,
+    getAd,
+    getAdComments,
+    postComment,
+    flagComment
 };

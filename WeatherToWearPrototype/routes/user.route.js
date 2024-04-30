@@ -7,7 +7,7 @@ const userController = require("../controllers/user.controller");
 router.get("/closet", userController.closetPage);
 router.get("/autoFit", userController.autoFitPage);
 router.get("/forSale", userController.forSalePage);
-router.get("/itemDisplay", userController.itemDisplayPage);
+router.get("/itemDisplay/:AdID", userController.itemDisplayPage);
 
 
 router.post("/createCloset", userController.createCloset);
@@ -17,6 +17,8 @@ router.post("/displayClothing2", userController.clothingInClosetAutoFit);
 router.post("/deleteClothing", userController.deleteClothing);
 router.post("/deleteCloset", userController.deleteCloset);
 router.post("/getAdByActiveStatus" , userController.getAdByActiveStatus);
+router.post("/postComment", userController.postComment);
+router.post("/flagComment", userController.flagComment);
 
 
 

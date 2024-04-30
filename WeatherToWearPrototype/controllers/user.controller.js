@@ -51,7 +51,11 @@ async function forSalePage(req, res) {
 function itemDisplayPage(req, res) {
     try {
         // res.sendfile('views/itemDisplay.html');
-        res.render("itemDisplay", {session: req.session});
+        // AdID = req.body.AdID;
+        const ad = model.getAd(req.params.AdID);
+        const comments = model.getAdComments(req.params.AdID);
+        // console.log(ad);
+        res.render("itemDisplay", {session: req.session, ad: ad, comments: comments});
     } catch (err) {
         console.error("Error while rendering itemDisplay page ", err.message);
         // next(err);
@@ -147,6 +151,29 @@ function getAdByActiveStatus(req, res) {
         });
 }
 
+function postComment(req, res) {
+    try {
+        const Username = req.session.Username;
+        const AdID = req.body.AdID;
+        const Comment = req.body.Comment;
+        model.postComment(AdID, Username, Comment);
+        res.redirect(`/itemDisplay/${AdID}`);
+    } catch (err) {
+        console.error("Error while posting comment ", err.message);
+    }
+}
+
+function flagComment(req, res) {
+    try {
+        const CommentID = req.body.CommentID;
+        model.flagComment(CommentID);
+        res.redirect('back');
+        
+    } catch (err) {
+        console.error("Error while flagging comment ", err.message);
+    }
+}
+
 
 module.exports = {
     
@@ -160,5 +187,7 @@ module.exports = {
     deleteClothing,
     deleteCloset,
     clothingInClosetAutoFit,
-    getAdByActiveStatus
+    getAdByActiveStatus,
+    postComment,
+    flagComment,
 };
